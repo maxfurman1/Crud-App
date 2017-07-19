@@ -3,6 +3,12 @@ import csv
 
 csv_file_path = "/users/maxfurman/desktop/csv-mgmt/crud-app/data/products.csv"
 
+products = []
+
+with open(csv_file_path, "r") as csv_file:
+    reader = csv.DictReader(csv_file)
+    for row in reader:
+        products.append(row)
 
 print ("-------------------------")
 print ("PRODUCTS APPLICATION")
@@ -10,7 +16,7 @@ print ("-------------------------")
 print ("Welcome " + os.getlogin() + "!")
 print ("\n")
 
-menu = "There are " + "100" + " products in the database. Please select an operation:"
+menu = "There are " + str(len(products)) + " products in the database. Please select an operation:"
 
 print ("     operation    |    description")
 print ("     ---------    |    -----------")
@@ -45,8 +51,8 @@ while True:
         print ("\n")
         with open(csv_file_path, "r") as csv_file:
             reader = csv.DictReader(csv_file)
-            for column in reader:
-                print (column["id"], column["name"], column["aisle"], column["department"],column["price"])
+            for row in reader:
+                print (row["id"], row["name"], row["aisle"], row["department"],row["price"])
             break
     elif chosen_operation == "Show":
         print ("\n")
