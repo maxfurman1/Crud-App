@@ -1,27 +1,8 @@
 import os
+import csv
 
-products = [
- {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
-    {"id":2, "name": "All-Seasons Salt", "department": "pantry", "aisle": "spices seasonings", "price": 4.99},
-    {"id":3, "name": "Robust Golden Unsweetened Oolong Tea", "department": "beverages", "aisle": "tea", "price": 2.49},
-    {"id":4, "name": "Smart Ones Classic Favorites Mini Rigatoni With Vodka Cream Sauce", "department": "frozen", "aisle": "frozen meals", "price": 6.99},
-    {"id":5, "name": "Green Chile Anytime Sauce", "department": "pantry", "aisle": "marinades meat preparation", "price": 7.99},
-    {"id":6, "name": "Dry Nose Oil", "department": "personal care", "aisle": "cold flu allergy", "price": 21.99},
-    {"id":7, "name": "Pure Coconut Water With Orange", "department": "beverages", "aisle": "juice nectars", "price": 3.50},
-    {"id":8, "name": "Cut Russet Potatoes Steam N' Mash", "department": "frozen", "aisle": "frozen produce", "price": 4.25},
-    {"id":9, "name": "Light Strawberry Blueberry Yogurt", "department": "dairy eggs", "aisle": "yogurt", "price": 6.50},
-    {"id":10, "name": "Sparkling Orange Juice & Prickly Pear Beverage", "department": "beverages", "aisle": "water seltzer sparkling water", "price": 2.99},
-    {"id":11, "name": "Peach Mango Juice", "department": "beverages", "aisle": "refrigerated", "price": 1.99},
-    {"id":12, "name": "Chocolate Fudge Layer Cake", "department": "frozen", "aisle": "frozen dessert", "price": 18.50},
-    {"id":13, "name": "Saline Nasal Mist", "department": "personal care", "aisle": "cold flu allergy", "price": 16.00},
-    {"id":14, "name": "Fresh Scent Dishwasher Cleaner", "department": "household", "aisle": "dish detergents", "price": 4.99},
-    {"id":15, "name": "Overnight Diapers Size 6", "department": "babies", "aisle": "diapers wipes", "price": 25.50},
-    {"id":16, "name": "Mint Chocolate Flavored Syrup", "department": "snacks", "aisle": "ice cream toppings", "price": 4.50},
-    {"id":17, "name": "Rendered Duck Fat", "department": "meat seafood", "aisle": "poultry counter", "price": 9.99},
-    {"id":18, "name": "Pizza for One Suprema Frozen Pizza", "department": "frozen", "aisle": "frozen pizza", "price": 12.50},
-    {"id":19, "name": "Gluten Free Quinoa Three Cheese & Mushroom Blend", "department": "dry goods pasta", "aisle": "grains rice dried goods", "price": 3.99},
-    {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
-]
+csv_file_path = "/users/maxfurman/desktop/csv-mgmt/crud-app/data/products.csv"
+
 
 print ("-------------------------")
 print ("PRODUCTS APPLICATION")
@@ -29,15 +10,70 @@ print ("-------------------------")
 print ("Welcome " + os.getlogin() + "!")
 print ("\n")
 
-menu = "There are " + str(len(products)) + " products in the database. Please select an operation:"
+menu = "There are " + "100" + " products in the database. Please select an operation:"
 
 print ("     operation    |    description")
 print ("     ---------    |    -----------")
 print ("     'List'       |    Display a list of product indentifiers.")
 print ("     'Show'       |    Show information about a product.")
+print ("     'Create'     |    Add a new product.")
+print ("     'Update'     |    Edit an existing product.")
+print ("     'Destroy'    |    Delete an existing product.")
+print ("\n")
 
-chosen_operation = input(menu)
+chosen_operation = input(menu).title()
 
-print (chosen_operation)
+def list_products():
+    print ("Listing Products:")
+
+def show_products():
+    print ("Showing a Product:")
+
+def create_products():
+    print ("Creating a Product:")
+
+def update_products():
+    print ("Updating a Product")
+
+def destroy_products():
+    print ("Destroying a Product")
+
+while True:
+    if chosen_operation == "List":
+        print ("\n")
+        list_products()
+        print ("\n")
+        with open(csv_file_path, "r") as csv_file:
+            reader = csv.DictReader(csv_file)
+            for column in reader:
+                print (column["id"], column["name"], column["aisle"], column["department"],column["price"])
+            break
+    elif chosen_operation == "Show":
+        print ("\n")
+        show_products()
+        print ("\n")
+        product_ids = []
+        product_id = input ("Ok, please specify the product's indentifier: ")
+        with open(csv_file_path, "r") as csv_file:
+            reader = csv.DictReader(csv_file)
+            for product_id in reader:
+                print (column["id"], column["name"], column["aisle"], column["department"],column["price"])
+            break
+
+    elif chosen_operation == "Create":
+        print ("\n")
+        create_products()
+    elif chosen_operation == "Update":
+        print ("\n")
+        update_products()
+    elif chosen_operation.title() == "Destroy":
+        print ("\n")
+        destroy_products()
+    else:
+        print ("\n")
+        print ("ERROR. PLEASE CHOOSE ONE OF THE RECOGNIZED OPERATIONS.")
 
 print ("\n")
+#print (chosen_operation)
+
+#csv_file_path = "/users/maxfurman/desktop/csv-mgmt/crud-app/data/products.csv"
