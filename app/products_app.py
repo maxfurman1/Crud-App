@@ -10,13 +10,6 @@ with open(csv_file_path, "r") as csv_file:
     for row in reader:
         products.append(row)
 
-other_file_path = "/users/maxfurman/desktop/csv-mgmt/crud-app/data/other-products.csv"
-with open(other_file_path, "w") as csv_file:
-    writer = csv.DictWriter(csv_file, fieldnames=["id","name","aisle","department","price"])
-    writer.writeheader() # uses fieldnames set above
-    for product in products:
-        writer.writerow(product)
-
 print ("-------------------------")
 print ("PRODUCTS APPLICATION")
 print ("-------------------------")
@@ -38,13 +31,19 @@ chosen_operation = input(menu).title()
 
 def list_products():
     print ("Listing Products:")
+    with open(csv_file_path, "r") as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            print (row["id"], row["name"], row["aisle"], row["department"],row["price"])
+            print ("Good-bye!")
 
 def show_products():
     print ("Showing a Product:")
     product_id = input("Please specify the product's ID:")
     product = [p for p in products if p["id"] == product_id][0]
     if product:
-        print("Here is your result:", product)
+        print("Here is your result:", product,)
+        print ("Good-bye!")
     else:
         print("No product found", product)
 
@@ -62,9 +61,36 @@ def create_products():
         "price": product_price
         }
     print ("New product is ", new_product)
+    products.append(new_product)
+    with open(csv_file_path, "w") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=["id","name","aisle","department","price"])
+        writer.writeheader() # uses fieldnames set above
+        for product in products:
+            writer.writerow(product)
+        print ("\n")
+        print ("New product added. Good-bye!")
 
 def update_products():
     print ("Updating a Product")
+    updated_product_id = input ("Please input the ID of the product you'd like to update:")
+    with open(csv_file_path, "r") as csv_file:
+        reader = csv.DictReader(csv_file)
+        if updated_product_id == row["id"]:
+            return updated_product_id
+            updated_product_name = input ("Please change name from " , + products["name"], + " to:")
+            updated_product_aisle = input ("Please change aisle from " , + products["aisle"], + " to:")
+            updated_product_department = input ("Please change department from " , + products["department"], + " to:")
+            updated_product_price = input ("Please change name price " , + products["price"], + " to:")
+            replaced_product = {
+                "id": updated_product_id,
+                "name": updated_product_name,
+                "aisle":  updated_product_aisle,
+                "department": updated_product_department,
+                "price": updated_product_price
+                }
+            print ("Updated product is ", replaced_product)
+        else:
+            print ("Unrecognized ID. Please try again.")
 
 def destroy_products():
     print ("Destroying a Product")
@@ -73,50 +99,31 @@ while True:
     if chosen_operation == "List":
         print ("\n")
         list_products()
-        print ("\n")
-        with open(csv_file_path, "r") as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in reader:
-                print (row["id"], row["name"], row["aisle"], row["department"],row["price"])
-            break
+        break
+
     elif chosen_operation == "Show":
         print ("\n")
         show_products()
-        print ("\n")
-        #product_ids = []
-        #product_id = ("Ok, please specify the product's indentifier: ")
-        #chosen_product = input(product_id)
-        #def lookup_product_by_id(product_id):
-        #    matching_products = [product for product in products if product["id"] == product_id] #create a new variable, and in it, filter the list we have and store the results of the list comprehension.
-            #we want any individual items in that list of items that match the following condition (i.e. product_id was input) if that given product_id is equal to some variable we specify
-        #    return matching_products [0] # because the line above gives us a list and we want to return a single item. this limits the results to one product per product_id
-        #    print (matching_products)
-        #chosen_product = input(product_id)
-    #    if chosen_product == products["id"]:
-        #    product_ids.append(row)
-        #    print (product_ids[0])
-        #with open(csv_file_path, "r") as csv_file:
-            #reader = csv.DictReader(csv_file)
-            #if chosen_product == product["id"]:
-            #    print (row["id"], row["name"], row["aisle"], row["department"],row["price"])
-            #for chosen_product in reader:
-                #print (row["id"], row["name"], row["aisle"], row["department"],row["price"])
-            #break
+        break
 
     elif chosen_operation == "Create":
         print ("\n")
         create_products()
+        break
+
     elif chosen_operation == "Update":
         print ("\n")
         update_products()
+        break
+
     elif chosen_operation.title() == "Destroy":
         print ("\n")
         destroy_products()
+        break
+
     else:
         print ("\n")
         print ("ERROR. PLEASE CHOOSE ONE OF THE RECOGNIZED OPERATIONS.")
+        break
 
 print ("\n")
-#print (chosen_operation)
-
-#csv_file_path = "/users/maxfurman/desktop/csv-mgmt/crud-app/data/products.csv"
