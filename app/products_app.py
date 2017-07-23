@@ -89,6 +89,13 @@ def update_products():
                 "price": updated_product_price
                 }
             print ("Updated product is ", replaced_product)
+            with open(csv_file_path, "w") as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=["id","name","aisle","department","price"])
+                writer.writeheader() # uses fieldnames set above
+                for product in products if updated_product_id == row["id"]:
+                    writer.writerow(product)
+                print ("\n")
+                print ("New product updated. Good-bye!")
         else:
             print ("Unrecognized ID. Please try again.")
 
