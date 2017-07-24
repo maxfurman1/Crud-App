@@ -14,5 +14,5 @@ Finally, download the [example `products.csv` file](https://raw.githubuserconten
 ## Usage
 
 ```shell
-python app/products_app.py
+python3 app/products_app.py
 ```
