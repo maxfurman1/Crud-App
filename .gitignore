@@ -1,2 +1,3 @@
-*
-!.gitignore
+.cache
+test
+.ds_store
